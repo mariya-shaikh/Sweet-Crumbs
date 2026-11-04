@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet Crumbs | Freshly Baked Happiness</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <h2 class="logo">
+    <i class="fa-solid fa-cake-candles"></i> Sweet Crumbs
+</h2>
+
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#cakes">Our Cakes</a></li>
+                <li><a href="#cart">My Cart</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#branches">Branches</a></li>
+                <li><a href="#testimonials">Reviews</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+            <a href="#cakes" class="nav-btn">Order Now</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="about">
+        <div class="hero-content">
+            
+
+            <h1>A Little Slice of Happiness!</h1>
+
+            <p>
+                Delicious cakes, beautiful memories.
+                Freshly baked for your special moments.
+            </p>
+
+            <a href="#cakes" class="main-btn">Explore Our Cakes</a>
+        </div>
+
+        <div class="hero-image">
+            <img
+                src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=700"
+                alt="Beautiful celebration cake">
+        </div>
+    </section>
+
+    <!-- Cakes Section -->
+    <section class="cakes-section" id="cakes">
+
+        <p class="tagline">MADE WITH LOVE</p>
+        <h2>Our Best Sellers</h2>
+
+        <div class="cake-container">
+
+            <div class="cake-card">
+                <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=500"
+                     alt="Strawberry cake">
+                <h3>Strawberry Cake</h3>
+                <p>Fresh and fruity delight</p>
+                <h4>₹599</h4>
+                <button onclick="addToCart('Strawberry Cake', 599)">
+                    Add to Cart
+                </button>
+            </div>
+
+            <div class="cake-card">
+                <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500"
+                     alt="Chocolate cake">
+                <h3>Chocolate Truffle</h3>
+                <p>Rich chocolate happiness</p>
+                <h4>₹699</h4>
+                <button onclick="addToCart('Chocolate Truffle', 699)">
+                    Add to Cart
+                </button>
+            </div>
+
+            <div class="cake-card">
+                <img src="https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=500"
+                     alt="Cream cake">
+                <h3>Vanilla Cream Cake</h3>
+                <p>Soft, sweet and creamy</p>
+                <h4>₹499</h4>
+                <button onclick="addToCart('Vanilla Cream Cake', 499)">
+                    Add to Cart
+                </button>
+            </div>
+
+        </div>
+    </section>
+    <section class="cart-section" id="cart">
+    <p class="tagline">YOUR SHOPPING BASKET</p>
+    <h2>
+    <i class="fa-solid fa-cart-shopping"></i> My Shopping Cart
+</h2>
+
+    <div id="cartItems">
+        <p>Your cart is empty. Add some delicious cakes!</p>
+    </div>
+
+    <div class="cart-summary">
+        <h3>Total Amount: ₹<span id="cartTotal">0</span></h3>
+        <button onclick="checkout()" class="checkout-btn">
+            Proceed to Checkout
+        </button>
+    </div>
+</section>
+<section class="checkout-section" id="checkout">
+    <p class="tagline">ALMOST THERE!</p>
+    <h2><i class="fa-solid fa-credit-card"></i> Complete Your Order</h2>
+    <p>Fill in your details for cake delivery.</p>
+
+    <form id="checkoutForm" onsubmit="placeOrder(event)">
+
+        <label for="customerName">Full Name</label>
+        <input type="text" id="customerName"
+               placeholder="Enter your full name" required>
+
+        <label for="customerPhone">Mobile Number</label>
+        <input type="tel" id="customerPhone"
+               placeholder="Enter 10-digit mobile number"
+               pattern="[0-9]{10}" required>
+
+        <label for="customerAddress">Delivery Address</label>
+        <textarea id="customerAddress"
+                  placeholder="Enter your complete address"
+                  required></textarea>
+
+        <label for="paymentMethod">Payment Method</label>
+        <select id="paymentMethod" required>
+            <option value="">Select payment method</option>
+            <option value="Cash on Delivery">Cash on Delivery</option>
+            <option value="UPI">UPI</option>
+        </select>
+
+        <button type="submit" class="checkout-btn">
+            Place Order
+        </button>
+
+    </form>
+</section>
+<section class="branches-section" id="branches">
+    <p class="tagline">FIND US NEAR YOU</p>
+    <h2><i class="fa-solid fa-store"></i> Our Sweet Crumbs Branches</h2>
+    <p>Visit us and enjoy freshly baked happiness!</p>
+
+    <div class="branch-container">
+
+        <div class="branch-card">
+            <h3>Mumbai - Kurla</h3>
+            <p>Kurla East, Mumbai, Maharashtra</p>
+            <p>Open: 10 AM - 10 PM</p>
+        </div>
+
+        <div class="branch-card">
+            <h3>Mumbai - Andheri</h3>
+            <p>Andheri West, Mumbai, Maharashtra</p>
+            <p>Open: 10 AM - 10 PM</p>
+        </div>
+
+        <div class="branch-card">
+            <h3>Mumbai - Bandra</h3>
+            <p>Bandra West, Mumbai, Maharashtra</p>
+            <p>Open: 10 AM - 10 PM</p>
+        </div>
+
+    </div>
+</section>
+<section class="testimonials-section" id="testimonials">
+    <p class="tagline">HAPPY CUSTOMERS</p>
+    <h2><i class="fa-solid fa-star"></i> What Our Customers Say</h2>
+    <p>Sweet words from our lovely customers!</p>
+
+    <div class="testimonial-container">
+
+        <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p>"The chocolate cake was delicious and fresh. I loved it!"</p>
+            <h3>Priya Sharma</h3>
+            <small>Happy Customer</small>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p>"Beautiful cake, amazing taste and lovely presentation."</p>
+            <h3>Neha Khan</h3>
+            <small>Happy Customer</small>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p>"Sweet Crumbs made my birthday celebration special!"</p>
+            <h3>Riya Patel</h3>
+            <small>Happy Customer</small>
+        </div>
+
+    </div>
+
+<div class="review-videos">
+    <h3>Customer Review Videos</h3>
+
+    <div class="video-grid">
+
+        <div class="video-card">
+            <iframe src="https://www.youtube.com/embed/uKKHCyyiYNE"
+                title="Customer Review 1" allowfullscreen></iframe>
+        </div>
+
+        <div class="video-card">
+            <iframe src="https://www.youtube.com/embed/pBnDFQ_drPM"
+                title="Customer Review 2" allowfullscreen></iframe>
+        </div>
+
+        <div class="video-card">
+            <iframe src="https://www.youtube.com/embed/2yrNLBSEj9M"
+                title="Customer Review 3" allowfullscreen></iframe>
+        </div>
+
+        <div class="video-card">
+            <iframe src="https://www.youtube.com/embed/Hj8wwt_iGhU"
+                title="Customer Review 4" allowfullscreen></iframe>
+        </div>
+
+    </div>
+</div>
+</section>
+<!-- Feedback Section -->
+<section class="feedback-section" id="feedback">
+    <p class="tagline">WE VALUE YOUR FEEDBACK</p>
+    <h2><i class="fa-solid fa-comment-dots"></i> Share Your Experience</h2>
+    <p>Tell us about your experience with Sweet Crumbs.</p>
+
+    <form id="feedbackForm" onsubmit="submitFeedback(event)">
+        <label for="feedbackName">Your Name</label>
+        <input type="text" id="feedbackName" placeholder="Enter your name" required>
+
+        <label for="feedbackRating">Your Rating</label>
+        <select id="feedbackRating" required>
+            <option value="">Select your rating</option>
+            <option value="5 Stars">5 Stars</option>
+            <option value="4 Stars">4 Stars</option>
+            <option value="3 Stars">3 Stars</option>
+            <option value="2 Stars">2 Stars</option>
+            <option value="1 Star">1 Star</option>
+        </select>
+
+        <label for="feedbackMessage">Your Feedback</label>
+        <textarea id="feedbackMessage" placeholder="Write your feedback..." required></textarea>
+
+        <button type="submit" class="checkout-btn">Submit Feedback</button>
+    </form>
+</section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <h2><i class="fa-solid fa-cake-candles"></i> Sweet Crumbs</h2>
+        <p>Making every celebration sweeter!</p>
+        <p>© 2026 Sweet Crumbs. All Rights Reserved.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+
+</body>
+</html>
