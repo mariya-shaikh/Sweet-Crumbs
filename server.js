@@ -7,32 +7,38 @@ const session = require("express-session");
 const bcrypt = require("bcryptjs");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
 // Session Setup
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || "sweet-crumbs-session-secret",
     resave: false,
     saveUninitialized: false,
     cookie: {
         httpOnly: true,
         sameSite: "strict",
+        secure: process.env.NODE_ENV === "production",
         maxAge: 60 * 60 * 1000
     }
 }));
 
 // MySQL Connection
-const db = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    port: process.env.DB_PORT
-});
+const dbConfig = process.env.MYSQL_URL
+    ? process.env.MYSQL_URL
+    : {
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
+        port: process.env.DB_PORT || 3306
+    };
+
+const db = mysql.createConnection(dbConfig);
 
 db.connect((err) => {
     if (err) {
@@ -40,6 +46,11 @@ db.connect((err) => {
     } else {
         console.log("MySQL Database Connected Successfully!");
     }
+});
+
+// Health Check
+app.get("/health", (req, res) => {
+    res.json({ status: "Sweet Crumbs server is running" });
 });
 
 // Admin Authentication Middleware
@@ -126,17 +137,22 @@ app.post("/api/feedback", (req, res) => {
 });
 
 // ADMIN LOGIN API
-const adminPasswordHash = bcrypt.hashSync(
-    process.env.ADMIN_PASSWORD,
-    10
-);
-
 app.post("/api/admin/login", (req, res) => {
     const { username, password } = req.body;
 
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    const adminUsername = process.env.ADMIN_USERNAME;
+
+    if (!adminUsername || !adminPassword) {
+        return res.status(500).json({
+            success: false,
+            message: "Admin credentials are not configured."
+        });
+    }
+
     if (
-        username === process.env.ADMIN_USERNAME &&
-        bcrypt.compareSync(password, adminPasswordHash)
+        username === adminUsername &&
+        password === adminPassword
     ) {
         req.session.isAdmin = true;
 
@@ -181,6 +197,7 @@ app.get("/api/admin/orders", requireAdmin, async (req, res) => {
 
     } catch (err) {
         console.log("Orders error:", err.message);
+
         res.status(500).json({
             message: "Could not load orders."
         });
@@ -199,6 +216,7 @@ app.get("/api/admin/feedback", requireAdmin, async (req, res) => {
 
     } catch (err) {
         console.log("Feedback error:", err.message);
+
         res.status(500).json({
             message: "Could not load feedback."
         });
@@ -249,5 +267,5 @@ app.put("/api/admin/orders/:id/status", requireAdmin, async (req, res) => {
 
 // START SERVER
 app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
